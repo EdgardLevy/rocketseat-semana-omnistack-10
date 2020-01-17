@@ -49,8 +49,8 @@ module.exports = {
 
     if (!dev){
       const techsArray = parseStringAsArray(techs)
-      //const response = await axios.get(`https://api.github.com/users/${github_username}`)
-      const {name = login, avatar_url,bio} = sampleData;
+      const response = await axios.get(`https://api.github.com/users/${github_username}`)
+      const {name = login, avatar_url,bio} = response.data//sampleData;
 
       const location = {
         type:'Point',
