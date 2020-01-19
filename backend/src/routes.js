@@ -9,5 +9,6 @@ routes.get('/search', SearchController.index )
 
 routes.get('/devs', DevController.index )
 routes.post('/devs', DevController.store )
+routes.delete('/dev/:id', DevController.delete )
 
 module.exports = routes;

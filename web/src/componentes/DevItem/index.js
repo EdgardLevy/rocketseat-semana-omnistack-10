@@ -19,7 +19,6 @@ export default function DevItem({ dev, onDelete }) {
         <div className="user-info">
           <strong>{dev.name}</strong>
           <span>{dev.techs.join(', ')}</span>
-          <span>{JSON.stringify(dev.location.coordinates)}</span>
         </div>
 
       </header>

@@ -6,7 +6,7 @@ import { requestPermissionsAsync, getCurrentPositionAsync } from 'expo-location'
 import { MaterialIcons } from '@expo/vector-icons'
 
 import api from '../services/api';
-import { connect, disconnect, subscribeToNewDevs } from '../services/socket';
+import { connect, disconnect, subscribeToNewDevs, subscribeToDelDev } from '../services/socket';
 
 export default function Main({ navigation }) {
 
@@ -39,6 +39,15 @@ export default function Main({ navigation }) {
 
   useEffect(() => {
     subscribeToNewDevs(dev => setDevs([...devs, dev]))
+    subscribeToDelDev(devId =>{
+      let idx = devs.findIndex(item=>item._id === devId)
+      if (idx > -1){
+        let _devs = [...devs]
+        _devs.splice(idx,1);
+        setDevs(_devs);
+      }
+    })
+
   }, [devs])
 
   function setupWebSocket() {

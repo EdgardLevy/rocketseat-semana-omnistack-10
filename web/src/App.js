@@ -28,9 +28,13 @@ function App() {
   }
 
   async function handleDelete(id){
-    alert('chegou aqui')
-    return
-    const response = await api.delete(`dev/${id}`)
+    await api.delete(`dev/${id}`)
+    let idx = devs.findIndex(item=>item._id === id)
+    if (idx > -1){
+      let _devs = [...devs];
+      _devs.splice(idx,1)
+      setDevs(_devs)
+    }
   }
 
   return (
