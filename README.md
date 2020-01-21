@@ -11,11 +11,19 @@
 
 ## Sobre o Projeto
 
-Projeto realizado na semana omnistack 10 da RocketSeat. Consiste na utilização de WebSocket para a comunicação entre o servidor e o mobile
+Projeto realizado na semana omnistack 10 da RocketSeat. Consiste na utilização de WebSocket para a comunicação entre o servidor e o mobile. 
 
 <br />
 <p align="center">
   <img alt="DevRadar" src=".github/devradar.png" />
+</p>
+
+<p>
+Eu decidi adicionar a animação para o svg do app e das devs no mapa. O resultado foi esse:
+</p>
+
+<p align="center">
+  <img alt="DevRadar" src=".github/devradar-animated.gif" />
 </p>
 
 ## Tecnologias utilizadas

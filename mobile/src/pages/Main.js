@@ -5,6 +5,8 @@ import { requestPermissionsAsync, getCurrentPositionAsync } from 'expo-location'
 
 import { MaterialIcons } from '@expo/vector-icons'
 
+import Animated, { Easing } from 'react-native-reanimated';
+
 import api from '../services/api';
 import { connect, disconnect, subscribeToNewDevs, subscribeToDelDev } from '../services/socket';
 
@@ -13,6 +15,7 @@ export default function Main({ navigation }) {
   const [currentRegion, setCurrentRegion] = useState(null);
   const [devs, setDevs] = useState([]);
   const [techs, setTechs] = useState('');
+  const [scale] = useState(new Animated.Value(0));
 
   useEffect(() => {
     async function loadInitialLocation() {
@@ -38,13 +41,30 @@ export default function Main({ navigation }) {
   }, [])
 
   useEffect(() => {
-    subscribeToNewDevs(dev => setDevs([...devs, dev]))
-    subscribeToDelDev(devId =>{
-      let idx = devs.findIndex(item=>item._id === devId)
-      if (idx > -1){
+
+
+
+    Animated.timing(scale, {
+      toValue: 54,
+      easing: Easing.back(),
+      duration: 700,
+      useNativeDriver: true
+    }).start()
+
+
+
+    subscribeToNewDevs(dev => {
+
+      setDevs([...devs, dev])
+      scale.setValue(0)
+    })
+    subscribeToDelDev(devId => {
+      let idx = devs.findIndex(item => item._id === devId)
+      if (idx > -1) {
         let _devs = [...devs]
-        _devs.splice(idx,1);
+        _devs.splice(idx, 1);
         setDevs(_devs);
+        scale.setValue(0)
       }
     })
 
@@ -70,7 +90,9 @@ export default function Main({ navigation }) {
         techs
       }
     })
+
     setDevs(response.data)
+    scale.setValue(0)
     setupWebSocket()
   }
 
@@ -99,8 +121,13 @@ export default function Main({ navigation }) {
               longitude: dev.location.coordinates[0],
               latitude: dev.location.coordinates[1]
             }}>
-            <Image
-              style={styles.avatar}
+            <Animated.Image
+              style={[styles.avatar,
+              {
+                height: scale,
+                width: scale,
+              }
+              ]}
               source={{ uri: dev.avatar_url }} />
             <Callout onPress={() => { navigation.navigate('Profile', { github_username: dev.github_username }) }}>
               <View style={styles.callout} >
@@ -148,8 +175,8 @@ const styles = StyleSheet.create({
     flex: 1
   },
   avatar: {
-    width: 54,
-    height: 54,
+    // width: 54,
+    // height: 54,
     borderRadius: 27,
     borderWidth: 2,
     borderColor: '#fff'

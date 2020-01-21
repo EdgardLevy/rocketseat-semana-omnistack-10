@@ -11,7 +11,7 @@ export default function Splash({navigation}) {
   useEffect(()=>{
     setTimeout(()=>{
       navigation.navigate('App')
-    },4000)
+    },4500)
   },[])
 
   return (
@@ -24,7 +24,7 @@ export default function Splash({navigation}) {
         height={100}
         width={355}
         scale={0.80}
-        delay={500}
+        delay={1000}
         ds={logo}
         loop={false}
       />
